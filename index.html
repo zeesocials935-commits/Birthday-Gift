@@ -1,0 +1,218 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy Birthday Waseem Sir!</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    min-height: 100vh;
+    font-family: 'Segoe UI', sans-serif;
+    background: linear-gradient(135deg, #171717, #303030, #F36925);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    color: white;
+    text-align: center;
+    padding: 20px;
+}
+
+.card {
+    background: rgba(255,255,255,0.12);
+    border: 1px solid rgba(255,255,255,0.3);
+    backdrop-filter: blur(15px);
+    border-radius: 25px;
+    padding: 40px 25px;
+    max-width: 500px;
+    width: 100%;
+    box-shadow: 0 15px 50px rgba(0,0,0,0.3);
+    z-index: 2;
+    animation: appear 1.2s ease;
+}
+
+@keyframes appear {
+    from {opacity: 0; transform: translateY(40px);}
+    to {opacity: 1; transform: translateY(0);}
+}
+
+.cake {
+    font-size: 85px;
+    margin: 15px;
+    animation: bounce 2s infinite;
+}
+
+@keyframes bounce {
+    50% {transform: translateY(-12px);}
+}
+
+h1 {
+    font-size: clamp(30px, 7vw, 43px);
+    color: #ffb17e;
+    margin-bottom: 12px;
+}
+
+h2 {
+    font-size: 27px;
+    margin-bottom: 20px;
+}
+
+.message {
+    font-size: 16px;
+    line-height: 1.8;
+    color: #f4f4f4;
+    margin-bottom: 25px;
+}
+
+button {
+    border: none;
+    background: #F36925;
+    color: white;
+    padding: 14px 30px;
+    font-size: 16px;
+    border-radius: 30px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+button:hover {
+    transform: scale(1.08);
+    background: #ff8547;
+}
+
+.footer {
+    margin-top: 25px;
+    font-size: 13px;
+    color: #ddd;
+}
+
+.balloon {
+    position: absolute;
+    font-size: 40px;
+    animation: float 6s infinite ease-in-out;
+}
+
+@keyframes float {
+    0%,100% {transform: translateY(100vh);}
+    100% {transform: translateY(-110vh);}
+}
+
+canvas {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 5;
+}
+</style>
+</head>
+
+<body>
+
+<canvas id="confetti"></canvas>
+
+<div class="card">
+    <div style="font-size:35px;">🎉 🎈 🎊</div>
+
+    <div class="cake">🎂</div>
+
+    <h1>Happy Birthday!</h1>
+    <h2>Waseem Sir ❤️</h2>
+
+    <p class="message">
+        Wishing you a wonderful birthday filled with happiness,
+        good health, success and countless achievements.
+
+        <br><br>
+
+        Thank you for your leadership, guidance and inspiration.
+        May you continue to achieve new milestones and enjoy
+        every moment of life.
+
+        <br><br>
+
+        <strong>May this year bring you even greater success!</strong>
+    </p>
+
+    <button onclick="celebrate()">
+        🎊 Celebrate!
+    </button>
+
+    <div class="footer">
+        With Respect & Best Wishes ❤️
+        <br>
+        Team Zee Sulehri Workwear
+    </div>
+</div>
+
+<script>
+const canvas = document.getElementById("confetti");
+const ctx = canvas.getContext("2d");
+
+let pieces = [];
+
+function resize() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+}
+
+window.addEventListener("resize", resize);
+resize();
+
+function createConfetti() {
+    pieces = [];
+
+    for(let i = 0; i < 200; i++) {
+        pieces.push({
+            x: Math.random() * canvas.width,
+            y: Math.random() * canvas.height - canvas.height,
+            size: Math.random() * 8 + 3,
+            speed: Math.random() * 4 + 2,
+            color: ["#F36925", "#FFD700", "#FFFFFF",
+                    "#FF69B4", "#00FFFF"][Math.floor(Math.random()*5)],
+            rotation: Math.random() * 360
+        });
+    }
+}
+
+function animate() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    pieces.forEach(p => {
+        ctx.save();
+        ctx.translate(p.x, p.y);
+        ctx.rotate(p.rotation * Math.PI / 180);
+        ctx.fillStyle = p.color;
+        ctx.fillRect(-p.size/2, -p.size/2, p.size, p.size);
+        ctx.restore();
+
+        p.y += p.speed;
+        p.rotation += 3;
+
+        if(p.y > canvas.height) {
+            p.y = -10;
+            p.x = Math.random() * canvas.width;
+        }
+    });
+
+    requestAnimationFrame(animate);
+}
+
+function celebrate() {
+    createConfetti();
+}
+
+createConfetti();
+animate();
+</script>
+
+</body>
+</html>
